@@ -3,21 +3,13 @@ const game = {
     ctx: undefined,
     w: document.getElementById("game-container").clientWidth,
     h: document.getElementById("game-container").clientHeight,
-    fps: 20,
+    fps: 10,
     gravity: 0.6,
     apples: [],
     score: 0,
     framesCounter: 0,
     snakeSizeInPX: 20,
-    // init() {
-    //     this.canvasDom = document.getElementById("game")
-    //     this.ctx = this.canvasDom.getContext('2d')
-    //     this.setDimensions();
-    //     this.snake = new snake(this.ctx)
-    //     this.interval = setInterval(() => {
-    //         this.reset();
-    //     }, 1000 / this.fps)
-    // },
+
     init() {
         this.canvasDom = document.getElementById("game");
         this.ctx = this.canvasDom.getContext("2d");
@@ -77,8 +69,8 @@ const game = {
     },
 
     _generateRandomCoords() {
-        let gridX = this._randomInt(1, 10)
-        let gridY = this._randomInt(1, 10)
+        let gridX = this._randomInt(1, 39)
+        let gridY = this._randomInt(1, 29)
 
         return { x: gridX * 20, y: gridY * 20 }
     },
@@ -95,6 +87,8 @@ const game = {
                 (this.snake.posX === apple.posX) &&
                 (this.snake.posY === apple.posY)
             ) {
+                this.snake.body++
+                console.log(this.snake.body)
                 this.generateApples()
                 return
             }

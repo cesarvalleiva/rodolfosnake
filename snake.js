@@ -8,7 +8,7 @@ class Snake {
         this.posX = posX
         this.posY = posY
         this.diameter = diameter
-        this.body = []
+        this.body = 0
     }
 
     move() {
@@ -39,24 +39,17 @@ class Snake {
                 this.posY -= 20;
                 break;
 
-
             case 's':
                 this.posY += 20;
-
-
                 break;
+
             case 'w':
-
                 this.posX -= 20;
-
                 break;
 
             case 'e':
                 this.posX += 20;
-
-
                 break;
-
         }
 
 
@@ -75,8 +68,5 @@ class Snake {
         if (this.posX > 800) {
             this.posX = 0
         }
-
-        console.log("snake", this.posX, this.posY)
-        // this.direction = undefined
     }
 }
