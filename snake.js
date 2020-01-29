@@ -8,7 +8,7 @@ class Snake {
         this.posX = posX
         this.posY = posY
         this.diameter = diameter
-        this.body = 0
+        this.body = []
     }
 
     move() {
@@ -26,13 +26,6 @@ class Snake {
                 this.direction = 'n';
             }
         }
-    }
-
-    draw() {
-        this.ctx.beginPath();
-        this.ctx.fillStyle = "green";
-        this.ctx.fillRect(this.posX, this.posY, this.diameter, this.diameter);
-        this.ctx.closePath();
 
         switch (this.direction) {
             case 'n':
@@ -52,21 +45,36 @@ class Snake {
                 break;
         }
 
-
         if (this.posY < 0) {
-            this.posY = 600
+            this.posY = 580
         }
 
-        if (this.posY > 600) {
+        if (this.posY > 580) {
             this.posY = 0
         }
 
         if (this.posX < 0) {
-            this.posX = 800
+            this.posX = 780
         }
 
-        if (this.posX > 800) {
+        if (this.posX > 780) {
             this.posX = 0
         }
+    }
+
+    draw() {
+        this.ctx.beginPath();
+        this.ctx.fillStyle = "green";
+        this.ctx.fillRect(this.posX, this.posY, this.diameter, this.diameter);
+        this.ctx.closePath();
+    }
+
+    drawPart(){
+        this.body.forEach((_, idx) => {
+            this.ctx.beginPath();
+            this.ctx.fillStyle = "blue";
+            this.ctx.fillRect((this.posX + this.diameter) + (this.diameter*idx), this.posY, this.diameter, this.diameter);
+            this.ctx.closePath();
+        })
     }
 }

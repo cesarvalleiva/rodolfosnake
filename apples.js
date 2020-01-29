@@ -7,8 +7,6 @@ class Apple {
         this.height = size;
         this.posX = posX
         this.posY = posY
-
-        console.log("apple", posX, posY)
     }
 
     draw() {

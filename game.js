@@ -44,6 +44,7 @@ const game = {
         this.background.draw();
         this.apples.forEach(apple => apple.draw());
         this.snake.draw();
+        this.snake.drawPart();
     },
 
     moveAll() {
@@ -56,7 +57,6 @@ const game = {
         const grid = this._generateRandomCoords()
 
         this.snake = new Snake(this.ctx, grid.x, grid.y, this.snakeSizeInPX);
-        console.log("snake", grid.x, grid.y)
         this.apples = [];
     },
 
@@ -87,7 +87,7 @@ const game = {
                 (this.snake.posX === apple.posX) &&
                 (this.snake.posY === apple.posY)
             ) {
-                this.snake.body++
+                this.snake.body.push(20)
                 console.log(this.snake.body)
                 this.generateApples()
                 return
