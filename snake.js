@@ -68,13 +68,4 @@ class Snake {
         this.ctx.fillRect(this.posX, this.posY, this.diameter, this.diameter);
         this.ctx.closePath();
     }
-
-    drawPart(){
-        this.body.forEach((_, idx) => {
-            this.ctx.beginPath();
-            this.ctx.fillStyle = "blue";
-            this.ctx.fillRect((this.posX + this.diameter) + (this.diameter*idx), this.posY, this.diameter, this.diameter);
-            this.ctx.closePath();
-        })
-    }
 }
