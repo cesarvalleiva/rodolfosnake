@@ -9,74 +9,105 @@ class Snake {
         this.posY = posY
         this.diameter = diameter
         this.body = []
-        this.limitPos = undefined
+
+        this.limitPosE = undefined
+        this.limitPosW = undefined
+        this.limitPosS = undefined
+        this.limitPosN = undefined
 
     }
 
     move() {
         window.onkeydown = e => {
             if (e.keyCode === 39) {
-                this.direction = 'e';
-                this.limitPos = { x: this.posX, y: this.posY }
+                if (this.direction === 'n' || this.direction === 's'){
+                    // this.limitN = undefined,
+                    // this.limitE = undefined,
+                    // this.limitS = undefined,
+                    // this.limitW = undefined,
+                    this.direction === "n" ? this.limitN = this.posY + 20 : this.limitS = this.posY;
+                    console.log(this.limitN, this.limitE, this.limitS, this.limitW)
+                    
+                    this.direction = 'e';
+                }
             }
             if (e.keyCode === 37) {
-                this.direction = 'w';
-                this.limitPos = { x: this.posX, y: this.posY }
+                if (this.direction === 'n' || this.direction === 's') {
+                    // this.limitN = undefined,
+                    // this.limitE = undefined,
+                    // this.limitS = undefined,
+                    // this.limitW = undefined,
+                    this.direction === "n" ? this.limitN = this.posY + 20 : this.limitS = this.posY;
+                    console.log(this.limitN, this.limitE, this.limitS, this.limitW)
+                    
+                    this.direction = 'w';     
+                }
             }
             if (e.keyCode === 40) {
-                this.direction = 's';
-                this.limitPos = { x: this.posX, y: this.posY }
+                if (this.direction === 'w' || this.direction === 'e') {
+                    // this.limitN = undefined,
+                    // this.limitE = undefined,
+                    // this.limitS = undefined,
+                    // this.limitW = undefined,
+                    this.direction === "w" ? this.limitW = this.posX : this.limitE = this.posX + 20;
+                    console.log(this.limitN, this.limitE, this.limitS, this.limitW)
+                    
+                    this.direction = 's';
+                }   
             }
             if (e.keyCode === 38) {
-                this.direction = 'n';
-                this.limitPos = { x: this.posX, y: this.posY }
+                if (this.direction === 'w' || this.direction === 'e') {
+                    // this.limitN = undefined,
+                    // this.limitE = undefined,
+                    // this.limitS = undefined,
+                    // this.limitW = undefined,
+                    this.direction === "w" ? this.limitW = this.posX + 20 : this.limitE = this.posX;
+                    console.log(this.limitN, this.limitE, this.limitS, this.limitW)
+
+                    this.direction = 'n';
+                }
             }
         }
+
 
         switch (this.direction) {
             case 'n':
                 this.posY -= 20;
-                this.body.forEach((element, idx) => {
-                    element.posY = this.posY + 20 * (idx + 1)
-                });
                 break;
 
             case 's':
                 this.posY += 20;
-                this.body.forEach((element, idx) => {
-                    element.posY = this.posY - 20 * (idx + 1)
-                });
                 break;
 
             case 'w':
                 this.posX -= 20;
-                this.body.forEach((element, idx) => {
-                    element.posX = this.posX - 20 * (idx + 1)
-                });
                 break;
 
             case 'e':
                 this.posX += 20;
-                this.body.forEach((element, idx) => {
-                    element.posX = this.posX + 20 * (idx + 1)
-                });
                 break;
         }
 
         if (this.posY < 0) {
-            this.posY = 580
-        }
-
-        if (this.posY > 580) {
             this.posY = 0
         }
 
+        if (this.posY > 580) {
+            this.posY = 580
+        }
+
         if (this.posX < 0) {
-            this.posX = 780
+            this.posX = 0
         }
 
         if (this.posX > 780) {
-            this.posX = 0
+            this.posX = 780
+        }
+    }
+
+    checkLimit() {
+        if(this.posX === this.limitN){
+            console.log("Has pasado")
         }
     }
 

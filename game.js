@@ -45,6 +45,7 @@ const game = {
         this.apples.forEach(apple => apple.draw());
         this.snake.draw();
         this.snake.drawBody();
+        this.snake.checkLimit();
     },
 
     moveAll() {
