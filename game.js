@@ -44,11 +44,12 @@ const game = {
         this.background.draw();
         this.apples.forEach(apple => apple.draw());
         this.snake.draw();
-        this.drawPart();
+        this.snake.drawBody();
     },
 
     moveAll() {
         this.snake.move();
+        this.snake.moveBody();
     },
 
     reset() {
@@ -87,36 +88,35 @@ const game = {
                 (this.snake.posX === apple.posX) &&
                 (this.snake.posY === apple.posY)
             ) {
-                this.snake.body.push([apple.posX, apple.posY])
+                this.snake.body.push({
+                    posX: this.snake.posX,
+                    posY: this.snake.posY,
+                    position: { x: this.snake.posX, y: this.snake.posY},
+                    direction: this.snake.direction
+                })
                 console.log(this.snake.body)
                 this.generateApples()
             }
         })
     },
 
-    drawPart() {
-        this.snake.body.forEach((_, idx) => {
-            this.ctx.beginPath();
-            this.ctx.fillStyle = "blue";
-            if(this.snake.direction == 'e'){
-                this.ctx.fillRect((this.snake.posX - this.snake.diameter) - (this.snake.diameter * idx), this.snake.posY, this.snake.diameter, this.snake.diameter);
-            }
-            if (this.snake.direction == 's') {
-                this.ctx.fillRect(this.snake.posX, (this.snake.posY - this.snake.diameter) - (this.snake.diameter * idx), this.snake.diameter, this.snake.diameter);
-            }
-            if (this.snake.direction == 'w') {
-                this.ctx.fillRect((this.snake.posX + this.snake.diameter) + (this.snake.diameter * idx), this.snake.posY, this.snake.diameter, this.snake.diameter);
-            }
-            if (this.snake.direction == 'n') {
-                this.ctx.fillRect(this.snake.posX, (this.snake.posY + this.snake.diameter) + (this.snake.diameter * idx), this.snake.diameter, this.snake.diameter);
-            }
-            this.ctx.closePath();
-        })
-    },
-
-    drawBody() {
-        this.bodyArr.forEach((part, idx) => {
-            part[idx]
-        })
-    }
+    // drawPart() {
+    //     this.snake.body.forEach((_, idx) => {
+    //         this.ctx.beginPath();
+    //         this.ctx.fillStyle = "blue";
+    //         if (this.snake.direction == 'e') {
+    //             this.ctx.fillRect((this.snake.posX - this.snake.diameter) - (this.snake.diameter * idx), this.snake.posY, this.snake.diameter, this.snake.diameter);
+    //         }
+    //         if (this.snake.direction == 's') {
+    //             this.ctx.fillRect(this.snake.posX, (this.snake.posY - this.snake.diameter) - (this.snake.diameter * idx), this.snake.diameter, this.snake.diameter);
+    //         }
+    //         if (this.snake.direction == 'w') {
+    //             this.ctx.fillRect((this.snake.posX + this.snake.diameter) + (this.snake.diameter * idx), this.snake.posY, this.snake.diameter, this.snake.diameter);
+    //         }
+    //         if (this.snake.direction == 'n') {
+    //             this.ctx.fillRect(this.snake.posX, (this.snake.posY + this.snake.diameter) + (this.snake.diameter * idx), this.snake.diameter, this.snake.diameter);
+    //         }
+    //         this.ctx.closePath();
+    //     })
+    // }
 }
