@@ -4,29 +4,23 @@ const PI_DOUBLE = PI * 2;
 class Snake {
     constructor(ctx, posX, posY, diameter) {
         this.ctx = ctx
-        this.direction = "e"
+        this.direction = undefined
         this.posX = posX
         this.posY = posY
         this.directions = []
         this.diameter = diameter
         this.body = []
-
-        this.limitPosE = undefined
-        this.limitPosW = undefined
-        this.limitPosS = undefined
-        this.limitPosN = undefined
+        this.imgSprite = new Image()
+        this.imgSprite.src = './img/snake_sprite.png'
+        this.imgPosX = 0
+        this.imgPosY = 0
+        this.imgWidth = diameter
+        this.imgHeight = diameter
 
     }
 
     move() {
-        const storeChangeDirection = (direction) => {
-            this.directions.push({
-                newDirection: direction,
-                currentX: this.posX,
-                currentY: this.posY
-            }
-            )
-        }
+     
         window.onkeydown = e => {
             if (e.keyCode === 39) {
 
@@ -45,6 +39,7 @@ class Snake {
                     }
                 }
                 this.direction = 'e'
+                this.imgPosX=0
             }
             if (e.keyCode === 37) {
 
@@ -62,6 +57,7 @@ class Snake {
                         }
                     }
                     this.direction = 'w';
+                    this.imgPosX = 40
 
                 }
             }
@@ -85,7 +81,7 @@ class Snake {
                     // console.log(this.limitN, this.limitE, this.limitS, this.limitW)
 
                     this.direction = 's';
-
+                    this.imgPosX = 20
                     //  console.log(this.directions)
                 }
             }
@@ -107,6 +103,7 @@ class Snake {
                         // console.log(this.limitN, this.limitE, this.limitS, this.limitW)
                     }
                     this.direction = 'n';
+                    this.imgPosX = 60
 
 
                     //  console.log(this.directions)
@@ -133,21 +130,21 @@ class Snake {
                 break;
         }
 
-        if (this.posY < 0) {
-            this.posY = 0
-        }
+        // if (this.posY < 0) {
+        //     this.gameOver();
+        // }
 
-        if (this.posY > 580) {
-            this.posY = 580
-        }
+        // if (this.posY > 580) {
+        //     this.gameOver();
+        // }
 
-        if (this.posX < 0) {
-            this.posX = 0
-        }
+        // if (this.posX < 0) {
+        //     this.gameOver();
+        // }
 
-        if (this.posX > 780) {
-            this.posX = 780
-        }
+        // if (this.posX > 780) {
+        //     this.gameOver();
+        // }
     }
 
     moveBody() {
@@ -210,10 +207,11 @@ class Snake {
     }
 
     draw() {
-        this.ctx.beginPath();
-        this.ctx.fillStyle = "green";
-        this.ctx.fillRect(this.posX, this.posY, this.diameter, this.diameter);
-        this.ctx.closePath();
+        this.ctx.drawImage(this.imgSprite,this.imgPosX, this.imgPosY, this.imgWidth, this.imgHeight, this.posX, this.posY, this.diameter, this.diameter)
+        // this.ctx.beginPath();
+        // this.ctx.fillStyle = "green";
+        // this.ctx.fillRect(this.posX, this.posY, this.diameter, this.diameter);
+        // this.ctx.closePath();
     }
 
     // drawBody() {

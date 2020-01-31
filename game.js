@@ -1,12 +1,14 @@
 const game = {
     canvasDom: undefined,
     ctx: undefined,
-    w: document.getElementById("game-container").clientWidth,
-    h: document.getElementById("game-container").clientHeight,
+    w: 800,
+    h: 600,
     fps: 10,
     gravity: 0.6,
     apples: [],
+    qtyApples: 0,
     body: [],
+    imgApple: './img/apple.png',
     score: 0,
     framesCounter: 0,
     snakeSizeInPX: 20,
@@ -15,13 +17,14 @@ const game = {
         this.canvasDom = document.getElementById("game");
         this.ctx = this.canvasDom.getContext("2d");
         this.setDimensions();
-        this.start();
+        this.reset();
+        WelcomeScreen.show(game)
     },
 
     start() {
-        this.reset();
+        document.querySelector("#game-container").style.display = "block"
         this.interval = setInterval(() => {
-           // console.log(this.snake.body)
+            // console.log(this.snake.body)
             this.framesCounter++
             this.clear();
             this.moveAll();
@@ -31,6 +34,9 @@ const game = {
             }
             this.snake.body.forEach(element => element.checkDirection())
             this.eat();
+            this.isCollision();
+            document.querySelector('.score-number').innerHTML = this.score
+            document.querySelector('.score-apples').innerHTML = this.qtyApples
         }, 1000 / this.fps);
     },
 
@@ -44,7 +50,7 @@ const game = {
     },
 
     drawAll() {
-        this.background.draw();
+        // this.background.draw();
         this.apples.forEach(apple => apple.draw());
         this.snake.draw();
         this.snake.body.forEach(element => element.draw())
@@ -57,6 +63,9 @@ const game = {
     },
 
     reset() {
+        document.querySelector("#overlay").style.display = "none"
+        document.querySelector("#game-over").style.display = "none"
+
         this.background = new Background(this.ctx);
 
         const grid = this._generateRandomCoords()
@@ -68,6 +77,8 @@ const game = {
         this.snake = new Snake(this.ctx, grid.x, grid.y, this.snakeSizeInPX);
         this.body = [];
         this.apples = [];
+        this.score = 0
+        this.qtyApples = 0
     },
 
     clear() {
@@ -89,6 +100,8 @@ const game = {
         const grid = this._generateRandomCoords()
 
         this.apples = [new Apple(this.ctx, grid.x, grid.y, this.snakeSizeInPX)]
+        this.score += 3
+        this.qtyApples++
     },
 
     eat() {
@@ -100,41 +113,55 @@ const game = {
 
 
                 switch (this.snake.direction) {
-            case 'n':
-                        this.snake.body.push(new BodyTest(this.ctx, this.snake.posX, (this.snake.posY + (this.snake.diameter * (this.snake.body.length+1))) , "n"));
-                break;
+                    case 'n':
+                        this.snake.body.push(new BodyTest(this.ctx, this.snake.posX, (this.snake.posY + (this.snake.diameter * (this.snake.body.length + 1))), "n"));
+                        break;
 
-            case 'e':
-                        this.snake.body.push(new BodyTest(this.ctx, (this.snake.posX - (this.snake.diameter * (this.snake.body.length + 1))), this.snake.posY,"e" ));
-                break;
+                    case 'e':
+                        this.snake.body.push(new BodyTest(this.ctx, (this.snake.posX - (this.snake.diameter * (this.snake.body.length + 1))), this.snake.posY, "e"));
+                        break;
 
-            case 's':
+                    case 's':
                         this.snake.body.push(new BodyTest(this.ctx, this.snake.posX, (this.snake.posY - (this.snake.diameter * (this.snake.body.length + 1))), "s"));
-                break;
+                        break;
 
-            case 'w':
+                    case 'w':
                         this.snake.body.push(new BodyTest(this.ctx, (this.snake.posX + (this.snake.diameter * (this.snake.body.length + 1))), this.snake.posY, "w"));
-                break;
-        }
-                // switch (this.snake.direction) {
-                //     case "n":
-                //         this.snake.body.push(new BodyTest(this.ctx, this.snake.posX, this.snake.posY + (this.snake.diameter * this.snake.body.length+this.snake.diameter) , this.snake.direction))
-                //         break
-                //     case "e":
-                //         this.snake.body.push(new BodyTest(this.ctx, this.snake.posX - (this.snake.diameter * this.snake.body.length + this.snake.diameter), this.snake.posY, this.snake.direction))
-                //         break
-                //     case "s":
-                //         this.snake.body.push(new BodyTest(this.ctx, this.snake.posX, this.snake.posY - (this.snake.diameter * this.snake.body.length + this.snake.diameter), this.snake.direction))
-                //         break
-                //     case "w":
-                //         this.snake.body.push(new BodyTest(this.ctx, this.snake.posX + (this.snake.diameter * this.snake.body.length + this.snake.diameter), this.snake.posY, this.snake.direction))
-                //         break
-                // }
+                        break;
+                }
+
 
                 this.generateApples()
             }
         })
+
+
     },
+
+    gameOver() {
+        this.reset()
+        document.querySelector("#game-container").style.display = "none"
+        GameOverScreen.show(game)
+        clearInterval(this.interval);
+    },
+
+    isCollision() {
+        if (this.snake.posY < 0) {
+            this.gameOver();
+        }
+
+        if (this.snake.posY > 580) {
+            this.gameOver();
+        }
+
+        if (this.snake.posX < 0) {
+            this.gameOver();
+        }
+
+        if (this.snake.posX > 780) {
+            this.gameOver();
+        }
+    }
 
     // drawPart() {
     //     this.snake.body.forEach((_, idx) => {
@@ -155,4 +182,10 @@ const game = {
     //         this.ctx.closePath();
     //     })
     // }
+}
+
+window.onload = () => {
+    console.info("Snake rodolfo v.1.0")
+
+    game.init()
 }

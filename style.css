@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Kalam:300,400,700&display=swap');
 
-body, html {
+body,
+html {
     width: 100vw;
     height: 100vh;
     margin: 0;
     padding: 0;
-    background-color: rgb(246, 253, 255);
-    background-image: url(./img/bg.png);
-    background-repeat: repeat-x;
-    background-position: bottom;
+    background-image: url('./img/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 
@@ -17,34 +17,25 @@ body, html {
     display: flex;
     margin: 0 auto;
     padding-top: 30px;
+    position: relative;
 }
 
-#rodolfo{
-    width: 50%;
+#welcome-screen {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#rodolfo {
+    display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 200px;
 }
 
-.fade-out {
-    animation-duration: 2s;
-    animation-name: slidein;
-}
-
-@keyframes slidein {
-    from {
-        margin-left: 0;
-    }
-
-    to {
-        margin-left: 100%;
-    }
-}
-
-#rodolfo h1{
+#rodolfo h1 {
     font-family: 'Kalam', cursive;
-    font-size: 60px;
+    font-size: 80px;
     font-weight: 700;
     text-align: center;
     padding: 0;
@@ -57,7 +48,7 @@ body, html {
     font-family: 'Kalam', cursive;
     font-size: 45px;
     font-weight: 400;
-    margin-left: 100px;
+    margin-left: 150px;
     margin-top: 0;
 }
 
@@ -97,10 +88,11 @@ body, html {
     padding: 10px;
     width: 150px;
     text-align: center;
-    margin-left: 130px;
+    margin-left: 60px;
 }
 
-.start:hover {
+.start:hover,
+.restart:hover {
     background-color: rgb(48, 106, 61);
     color: white;
     cursor: pointer;
@@ -110,10 +102,131 @@ body, html {
     margin: 0 auto;
     width: 800px;
     height: 600px;
+    display: none;
 }
 
 canvas {
-    border: 1px solid black;
+    background-image: url('./img/cuadrado.png');
+    background-repeat: repeat-x repeat-y;
+    border: 10px solid rgb(89, 60, 36);
     margin: 0 auto;
     margin-top: 40px;
+}
+
+#score-container {
+    color: white;
+    /* background-color: #2C8C99; */
+    background-image: url('./img/paper.png');
+    background-repeat: no-repeat;
+    background-size: 300px;
+    position: absolute;
+    padding: 10px;
+    top: 50px;
+    left: 20px;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.score {
+    width: 100px;
+    height: 60px;
+    display: flex;
+    position: absolute;
+    left: 100px;
+    top: 90px;
+}
+
+.cup {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.score-text {
+    margin-top: 10px;
+    font-family: 'Kalam', cursive;
+    font-size: 20px;
+    color: rgb(48, 106, 61);
+    font-weight: 700;
+}
+
+.apples {
+    width: 100px;
+    height: 60px;
+    display: flex;
+    position: absolute;
+    left: 100px;
+    top: 150px;
+}
+
+.score-apples {
+    margin-top: 10px;
+    font-family: 'Kalam', cursive;
+    font-size: 20px;
+    color: rgb(48, 106, 61);
+    font-weight: 700;
+}
+
+.apple {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}
+
+.apple-text {
+    margin-top: 10px;
+    font-family: 'Kalam', cursive;
+    font-size: 20px;
+    color: rgb(48, 106, 61);
+    font-weight: 700;
+    position: absolute;
+    left: 50px;
+}
+
+#game-over {
+    width: 400px;
+    height: 400px;
+    background-color: #2C8C99;
+    position: absolute;
+    top: 0;
+    left: 480px;
+    box-shadow: 5px 10px #888888;
+    text-align: center;
+    z-index: 110;
+    display: none;
+}
+
+#overlay {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .7);
+    z-index: 100;
+    display: none;
+}
+
+#game-over h2 {
+    font-family: 'Kalam', cursive;
+    font-size: 45px;
+    font-weight: 400;
+    margin-top: 40px;
+}
+
+.game-over-img {
+    width: 250px;
+    margin-top: 20px;
+}
+
+.restart {
+    font-family: 'Kalam', cursive;
+    margin-top: 40px;
+    border-radius: 3px;
+    border: 0;
+    padding: 10px;
+    width: 150px;
+    text-align: center;
 }

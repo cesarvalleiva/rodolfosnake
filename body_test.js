@@ -8,6 +8,13 @@ class BodyTest{
         this.width = 20
         this.limits=[]
         this.id=Math.round(Math.random()*100)
+        this.imgSprite = new Image()
+        this.imgSprite.src = './img/snake_sprite.png'
+        this.imgPosX = 0
+        this.imgPosY = 20
+        this.imgWidth = 20
+        this.imgHeight = 20
+        this.diameter = 20
         
     }
 
@@ -77,6 +84,20 @@ class BodyTest{
     changeDirection(direction){
         console.log(this.limits[0])
         this.limits.shift()
+        switch (direction) {
+            case 'n':
+                this.imgPosX = 60
+                break;
+            case 'e':
+                this.imgPosX = 0
+                break;
+            case 'w':
+                this.imgPosX = 40
+                break;
+            case 's':
+                this.imgPosX = 20
+                break;
+        }
         this.direction = direction
     }
 
@@ -84,9 +105,11 @@ class BodyTest{
 
     draw(){
         //lo de pintar
-        this.ctx.beginPath();
-        this.ctx.fillStyle = "blue";
-        this.ctx.fillRect(this.posX, this.posY, this.width, this.height);
-        this.ctx.closePath();
+        this.ctx.drawImage(this.imgSprite, this.imgPosX, this.imgPosY, this.imgWidth, this.imgHeight, this.posX, this.posY, this.diameter, this.diameter)
+        // this.ctx.drawImage(this.imgBody, this.posX, this.posY, this.width, this.height)
+        // this.ctx.beginPath();
+        // this.ctx.fillStyle = "blue";
+        // this.ctx.fillRect(this.posX, this.posY, this.width, this.height);
+        // this.ctx.closePath();
     }
 }

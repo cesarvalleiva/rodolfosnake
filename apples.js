@@ -3,8 +3,8 @@
 class Apple {
     constructor(ctx, posX, posY, size, imgApple) {
         this.ctx = ctx;
-        this.width = 23;
-        this.height = 23;
+        this.width = 20;
+        this.height = 20;
         this.posX = posX
         this.posY = posY
         this.imgApple = new Image()
@@ -13,10 +13,6 @@ class Apple {
 
     draw() {
             this.ctx.drawImage(this.imgApple, this.posX, this.posY, this.width, this.height)
-    //     this.ctx.beginPath();
-    //     this.ctx.fillStyle = "red";
-    //     this.ctx.fillRect(this.posX, this.posY, this.width, this.height);
-    //     this.ctx.closePath();
     }
     
 }
