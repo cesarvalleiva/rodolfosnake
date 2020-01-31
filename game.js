@@ -6,6 +6,7 @@ const game = {
     fps: 10,
     gravity: 0.6,
     apples: [],
+    body: [],
     score: 0,
     framesCounter: 0,
     snakeSizeInPX: 20,
@@ -20,6 +21,7 @@ const game = {
     start() {
         this.reset();
         this.interval = setInterval(() => {
+           // console.log(this.snake.body)
             this.framesCounter++
             this.clear();
             this.moveAll();
@@ -27,6 +29,7 @@ const game = {
             if (this.apples.length < 1) {
                 this.generateApples();
             }
+            this.snake.body.forEach(element => element.checkDirection())
             this.eat();
         }, 1000 / this.fps);
     },
@@ -44,21 +47,26 @@ const game = {
         this.background.draw();
         this.apples.forEach(apple => apple.draw());
         this.snake.draw();
-        this.snake.drawBody();
-        this.snake.checkLimit();
+        this.snake.body.forEach(element => element.draw())
     },
 
     moveAll() {
         this.snake.move();
         this.snake.moveBody();
+        this.snake.body.forEach(element => element.move())
     },
 
     reset() {
         this.background = new Background(this.ctx);
 
-        const grid = this._generateRandomCoords()
+        // const grid = this._generateRandomCoords()
+        const grid = {
+            x: 140,
+            y: 100
+        }
 
         this.snake = new Snake(this.ctx, grid.x, grid.y, this.snakeSizeInPX);
+        this.body = [];
         this.apples = [];
     },
 
@@ -89,13 +97,40 @@ const game = {
                 (this.snake.posX === apple.posX) &&
                 (this.snake.posY === apple.posY)
             ) {
-                this.snake.body.push({
-                    posX: this.snake.posX,
-                    posY: this.snake.posY,
-                    position: { x: this.snake.posX, y: this.snake.posY},
-                    direction: this.snake.direction
-                })
-                console.log(this.snake.body)
+
+
+                switch (this.snake.direction) {
+            case 'n':
+                        this.snake.body.push(new BodyTest(this.ctx, this.snake.posX, (this.snake.posY + (this.snake.diameter * (this.snake.body.length+1))) , "n"));
+                break;
+
+            case 'e':
+                        this.snake.body.push(new BodyTest(this.ctx, (this.snake.posX - (this.snake.diameter * (this.snake.body.length + 1))), this.snake.posY,"e" ));
+                break;
+
+            case 's':
+                        this.snake.body.push(new BodyTest(this.ctx, this.snake.posX, (this.snake.posY - (this.snake.diameter * (this.snake.body.length + 1))), "s"));
+                break;
+
+            case 'w':
+                        this.snake.body.push(new BodyTest(this.ctx, (this.snake.posX + (this.snake.diameter * (this.snake.body.length + 1))), this.snake.posY, "w"));
+                break;
+        }
+                // switch (this.snake.direction) {
+                //     case "n":
+                //         this.snake.body.push(new BodyTest(this.ctx, this.snake.posX, this.snake.posY + (this.snake.diameter * this.snake.body.length+this.snake.diameter) , this.snake.direction))
+                //         break
+                //     case "e":
+                //         this.snake.body.push(new BodyTest(this.ctx, this.snake.posX - (this.snake.diameter * this.snake.body.length + this.snake.diameter), this.snake.posY, this.snake.direction))
+                //         break
+                //     case "s":
+                //         this.snake.body.push(new BodyTest(this.ctx, this.snake.posX, this.snake.posY - (this.snake.diameter * this.snake.body.length + this.snake.diameter), this.snake.direction))
+                //         break
+                //     case "w":
+                //         this.snake.body.push(new BodyTest(this.ctx, this.snake.posX + (this.snake.diameter * this.snake.body.length + this.snake.diameter), this.snake.posY, this.snake.direction))
+                //         break
+                // }
+
                 this.generateApples()
             }
         })
