@@ -59,11 +59,11 @@ const game = {
     reset() {
         this.background = new Background(this.ctx);
 
-        // const grid = this._generateRandomCoords()
-        const grid = {
-            x: 140,
-            y: 100
-        }
+        const grid = this._generateRandomCoords()
+        // const grid = {
+        //     x: 140,
+        //     y: 100
+        // }
 
         this.snake = new Snake(this.ctx, grid.x, grid.y, this.snakeSizeInPX);
         this.body = [];
